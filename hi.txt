@@ -1,11 +1,10 @@
 THIS IS STILL IN PRODUCTION (I will fix things but have not much else to add, request form is below)
-Insert a link into the launcher here : https://dashv3.w3spaces.com/index.html
+OFFICIAL WEBSITE : https://dashv3.w3spaces.com/index.html
+Pr彡xys are in the official website
 If you would like to have a game added or fixed fill out this google form : https://docs.google.com/forms/d/e/1FAIpQLSfqJscF8Pa28ngLov3x0MyD2we9K-ETcUAX700Ve4VeiYuQHg/viewform?usp=dialog
-PR彡XYS:
-Frogies Arcade: spells.myaddr.dev
-Frogies Arcade #2: spells.myaddr.io
-Sandstone (Doesn't work with school wifi, use launcher) https://raw.githubusercontent.com/three-1415/loader/main/Sandstone.html
-G彡MES:
+Sandstone: (Doesn't work with school wifi, use launcher) https://raw.githubusercontent.com/three-1415/loader/main/Sandstone.html
+G彡MES: USE OFFICIAL WEBSITE TO LAUNCH
+An entire website called gn-math: https://raw.githubusercontent.com/three-1415/game/refs/heads/main/gn.html
 A few of my favorites:
 Minecraft 1.12.2 : https://raw.githubusercontent.com/three-1415/game/refs/heads/main/eagler.html
 PolyTrack : https://raw.githubusercontent.com/three-1415/game/refs/heads/main/polytrack.html
