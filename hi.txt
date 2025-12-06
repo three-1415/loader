@@ -12,7 +12,7 @@ PolyTrack : https://raw.githubusercontent.com/three-1415/game/refs/heads/main/po
 Getting Over It Scratch Edition (UPDATED TIMER) : https://raw.githubusercontent.com/FritzCohen/Luminesence-Website/main/Luminesence%20Website/Games/singleHTMLGames/justgetoverit.html
 Geometry Dash Scratch : https://raw.githubusercontent.com/CrimsonDeck/Geometry_Dash_v1.5_Griffpatch/refs/heads/main/index.html
 Tomb of The Mask : https://raw.githubusercontent.com/three-1415/game/refs/heads/main/totm.html
-OvO: https://raw.githubusercontent.com/warrier-8/boringfridownload/refs/heads/main/ovo.html
+OvO: https://raw.githubusercontent.com/bingleton-ate-a-carrot-and-died/bingleton-ate-a-carrot-and-died.github.io/refs/heads/main/games/ovo1.html
 Now on to the rest which mostly work
 
 
