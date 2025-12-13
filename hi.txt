@@ -7,6 +7,7 @@ G彡ME WEBSITES: USE OFFICIAL WEBSITE TO LAUNCH
 gn-math: https://raw.githubusercontent.com/three-1415/loader/refs/heads/main/gn.html
 G彡MES: USE OFFICIAL WEBSITE TO LAUNCH
 A few of my favorites:
+Geometry Dash (FINALLY UNBL彡CKABLE): https://raw.githubusercontent.com/three-1415/game/refs/heads/main/geodash.html
 Minecraft 1.12.2 : https://raw.githubusercontent.com/three-1415/game/refs/heads/main/eagler.html
 PolyTrack : https://raw.githubusercontent.com/three-1415/game/refs/heads/main/polytrack.html
 Getting Over It Scratch Edition (UPDATED TIMER) : https://raw.githubusercontent.com/FritzCohen/Luminesence-Website/main/Luminesence%20Website/Games/singleHTMLGames/justgetoverit.html
