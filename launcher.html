@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Hi</title>
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      font-family: sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: #f0f0f0;
+    }
+
+    #click-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      z-index: 9999;
+      cursor: pointer;
+    }
+
+    h2 {
+      z-index: 1;
+      position: relative;
+    }
+  </style>
+</head>
+<body>
+  <div id="click-overlay"></div>
+  <h2>Click anywhere to launch</h2>
+
+  <script>
+    async function loadAndRun() {
+      const url = "https://raw.githubusercontent.com/three-1415/loader/refs/heads/main/loader.html";
+      try {
+        const response = await fetch(url);
+        const html = await response.text();
+
+        const win = window.open('about:blank', '_blank');
+        if (!win) throw new Error("Popup blocked");
+
+        win.document.open();
+        win.document.write(html);
+        win.document.close();
+      } catch (err) {
+        alert("Failed to load HTML: " + err.message);
+      }
+    }
+
+    document.getElementById("click-overlay").addEventListener("click", loadAndRun);
+  </script>
+</body>
+</html>
+
