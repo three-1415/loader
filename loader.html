@@ -2,92 +2,44 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>彡DashV3彡</title>
+  <title>Hi</title>
   <style>
     html, body {
       margin: 0;
       padding: 0;
       height: 100%;
-      font-family: "Segoe UI", sans-serif;
+      font-family: sans-serif;
       display: flex;
-      flex-direction: column;
       justify-content: center;
       align-items: center;
-      background: #002f2f; /* dark cyan background */
-      color: #e0ffff; /* light cyan text */
+      background: #f0f0f0;
     }
 
-    #url-input {
-      width: 60%;
-      max-width: 500px;
-      padding: 12px;
-      font-size: 1rem;
-      margin-bottom: 20px;
-      border: 2px solid #00ced1; /* cyan border */
-      border-radius: 6px;
-      background: #003f3f;
-      color: #e0ffff;
-      outline: none;
-      box-shadow: 0 0 8px #00ffff80; /* light cyan glow */
-      transition: box-shadow 0.3s ease;
-    }
-
-    #url-input:focus {
-      box-shadow: 0 0 15px #00ffffcc;
-    }
-
-    .dash-button {
-      padding: 12px 28px;
-      background: #004f4f;
-      color: #e0ffff;
-      border: none;
-      border-radius: 6px;
+    #click-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      z-index: 9999;
       cursor: pointer;
-      font-size: 1rem;
-      box-shadow: 0 0 10px #00ffff80;
-      transition: background 0.3s ease, box-shadow 0.3s ease;
-      margin: 8px;
-    }
-
-    .dash-button:hover {
-      background: #006f6f;
-      box-shadow: 0 0 20px #00ffffcc;
     }
 
     h2 {
-      margin-bottom: 25px;
-      text-shadow: 0 0 10px #00ffff80;
+      z-index: 1;
+      position: relative;
     }
   </style>
 </head>
 <body>
-  <h2>彡DashV3彡</h2>
-  <h5>Launcher Link Storage: https://raw.githubusercontent.com/three-1415/loader/main/hi.txt</h5>
-  <h5>Adding Chat Soon</h5>
-  <input id="url-input" type="text" placeholder="Insert Raw Link Here" />
-  <button id="click-overlay" class="dash-button">Launch</button>
+  <div id="click-overlay"></div>
+  <h2>Click anywhere to launch</h2>
 
-  <!-- New buttons -->
-  <button class="dash-button" onclick="openIframe('https://classroom-5unjzudv3a-uc.a.run.app')">Open Ghost - if bl彡cked copy link and paste in newtab</button>
-  <button class="dash-button" onclick="openIframe('https://account.dorna-consult.ro')">Open Space</button>
-  <button class="dash-button" onclick="openIframe('https://archive.osiadaczabogados.cl')">Space #2</button>
-  <button class="dash-button" onclick="openIframe('https://home.tablero-anmac.ar')">Space #3</button>
-  <button class="dash-button" onclick="openIframe('https://buy.artweb.website.cdn.cloudflare.net')">Space #4</button>
-  <button class="dash-button" onclick="openIframe('https://info.desmos.live.cdn.cloudflare.net')">Space #5</button>
-  <button class="dash-button" onclick="openIframe('https://class.desmos.live.cdn.cloudflare.net')">Space #6</button>
-  <button class="dash-button" onclick="openIframe('https://by-void.alex.primeflk.ch')">Open Velara</button>
-  
   <script>
     async function loadAndRun() {
-      const url = document.getElementById("url-input").value.trim();
-      if (!url) {
-        alert("Please enter a valid raw.githubusercontent.com link.");
-        return;
-      }
-
+      const url = "https://raw.githubusercontent.com/three-1415/loader/refs/heads/main/loader.html";
       try {
         const response = await fetch(url);
-        if (!response.ok) throw new Error("HTTP " + response.status);
         const html = await response.text();
 
         const win = window.open('about:blank', '_blank');
@@ -102,24 +54,6 @@
     }
 
     document.getElementById("click-overlay").addEventListener("click", loadAndRun);
-
-    function openIframe(link) {
-      const win = window.open('about:blank', '_blank');
-      if (!win) {
-        alert("Popup blocked");
-        return;
-      }
-      win.document.write(`
-        <!DOCTYPE html>
-        <html>
-        <head><title>Hi</title></head>
-        <body style="margin:0; height:100vh; display:flex;">
-          <iframe src="${link}" style="border:none; width:100%; height:100%;"></iframe>
-        </body>
-        </html>
-      `);
-      win.document.close();
-    }
   </script>
 </body>
 </html>
