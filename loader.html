@@ -3,32 +3,73 @@
 <head>
 <meta charset="UTF-8" />
 <title>彡DashV3彡</title>
+
 <style>
 html, body {
 margin: 0;
 padding: 0;
 height: 100%;
 font-family: "Segoe UI", sans-serif;
+background: #002f2f;
+color: #e0ffff;
 display: flex;
 flex-direction: column;
-justify-content: center;
 align-items: center;
-background: #002f2f; /* dark cyan background */
-color: #e0ffff; /* light cyan text */
 }
 
+/* TAB BUTTONS */
+.tab-container {
+display: flex;
+gap: 10px;
+margin-top: 20px;
+}
+
+.tab-button {
+padding: 10px 20px;
+background: #004f4f;
+border: none;
+border-radius: 6px;
+color: #e0ffff;
+cursor: pointer;
+box-shadow: 0 0 10px #00ffff80;
+transition: 0.3s;
+}
+
+.tab-button:hover {
+background: #006f6f;
+box-shadow: 0 0 20px #00ffffcc;
+}
+
+.tab-button.active {
+background: #008b8b;
+box-shadow: 0 0 25px #00ffffcc;
+}
+
+/* TAB CONTENT */
+.tab-content {
+display: none;
+width: 90%;
+max-width: 900px;
+margin-top: 20px;
+padding: 20px;
+background: #003838;
+border-radius: 10px;
+box-shadow: 0 0 15px #00ffff40;
+}
+
+/* Launcher input */
 #url-input {
 width: 60%;
 max-width: 500px;
 padding: 12px;
 font-size: 1rem;
 margin-bottom: 20px;
-border: 2px solid #00ced1; /* cyan border */
+border: 2px solid #00ced1;
 border-radius: 6px;
 background: #003f3f;
 color: #e0ffff;
 outline: none;
-box-shadow: 0 0 8px #00ffff80; /* light cyan glow */
+box-shadow: 0 0 8px #00ffff80;
 transition: box-shadow 0.3s ease;
 }
 
@@ -53,31 +94,61 @@ margin: 8px;
 background: #006f6f;
 box-shadow: 0 0 20px #00ffffcc;
 }
-
-h2 {
-margin-bottom: 25px;
-text-shadow: 0 0 10px #00ffff80;
-}
 </style>
 </head>
-<body>
-<h2>彡DashV3彡</h2>
-<h5>Launcher Link Storage: https://raw.githubusercontent.com/three-1415/loader/refs/heads/main/dashv3.txt</h5>
-<h5>Adding Chat Soon</h5>
-<input id="url-input" type="text" placeholder="Insert Raw Link Here" />
-<button id="click-overlay" class="dash-button">Launch</button>
 
-<!-- New buttons -->
-<button class="dash-button" onclick="openIframe('https://classroom-5unjzudv3a-uc.a.run.app')">Open Ghost - if bl彡cked copy link and paste in newtab</button>
-<button class="dash-button" onclick="openIframe('https://account.dorna-consult.ro')">Open Space</button>
-<button class="dash-button" onclick="openIframe('https://archive.osiadaczabogados.cl')">Space #2</button>
-<button class="dash-button" onclick="openIframe('https://home.tablero-anmac.ar')">Space #3</button>
-<button class="dash-button" onclick="openIframe('https://buy.artweb.website.cdn.cloudflare.net')">Space #4</button>
-<button class="dash-button" onclick="openIframe('https://info.desmos.live.cdn.cloudflare.net')">Space #5</button>
-<button class="dash-button" onclick="openIframe('https://class.desmos.live.cdn.cloudflare.net')">Space #6</button>
-<button class="dash-button" onclick="openIframe('https://by-void.alex.primeflk.ch')">Open Velara</button>
+<body>
+
+<h2>彡DashV3彡</h2>
+
+<!-- ✅ TAB BUTTONS -->
+<div class="tab-container">
+  <button class="tab-button active" onclick="openTab('launcher')">Launcher</button>
+  <button class="tab-button" onclick="openTab('spaces')">Pr彡xys</button>
+  <button class="tab-button" onclick="openTab('comments')">Chat</button>
+</div>
+
+<!-- ✅ TAB 1: LAUNCHER -->
+<div id="launcher" class="tab-content" style="display:block;">
+  <h3>Launcher</h3>
+  <input id="url-input" type="text" placeholder="Insert Raw Link Here" />
+  <button id="click-overlay" class="dash-button">Launch</button>
+  <h5>Link Storage: https://raw.githubusercontent.com/three-1415/loader/refs/heads/main/dashv3.txt</h5>
+</div>
+
+<!-- ✅ TAB 2: SPACES -->
+<div id="spaces" class="tab-content">
+  <h3>Pr彡xys</h3>
+
+  <button class="dash-button" onclick="openIframe('https://classroom-5unjzudv3a-uc.a.run.app')">Open Ghost</button>
+  <button class="dash-button" onclick="openIframe('https://account.dorna-consult.ro')">Open Space</button>
+  <button class="dash-button" onclick="openIframe('https://archive.osiadaczabogados.cl')">Space #2</button>
+  <button class="dash-button" onclick="openIframe('https://home.tablero-anmac.ar')">Space #3</button>
+  <button class="dash-button" onclick="openIframe('https://buy.artweb.website.cdn.cloudflare.net')">Space #4</button>
+  <button class="dash-button" onclick="openIframe('https://info.desmos.live.cdn.cloudflare.net')">Space #5</button>
+  <button class="dash-button" onclick="openIframe('https://class.desmos.live.cdn.cloudflare.net')">Space #6</button>
+  <button class="dash-button" onclick="openIframe('https://by-void.alex.primeflk.ch')">Open Velara</button>
+</div>
+
+<!-- ✅ TAB 3: COMMENTS -->
+<div id="comments" class="tab-content">
+  <h3>Chat</h3>
+  <div class="powr-comments" id="0255f43e_1765672603"></div>
+</div>
+
+<script src="https://www.powr.io/powr.js?platform=html"></script>
 
 <script>
+/* ✅ TAB SWITCHING */
+function openTab(tabName) {
+  document.querySelectorAll('.tab-content').forEach(div => div.style.display = 'none');
+  document.querySelectorAll('.tab-button').forEach(btn => btn.classList.remove('active'));
+
+  document.getElementById(tabName).style.display = 'block';
+  event.target.classList.add('active');
+}
+
+/* ✅ Launcher logic */
 async function loadAndRun() {
 const url = document.getElementById("url-input").value.trim();
 if (!url) {
@@ -103,6 +174,7 @@ alert("Failed to load HTML: " + err.message);
 
 document.getElementById("click-overlay").addEventListener("click", loadAndRun);
 
+/* ✅ Iframe opener */
 function openIframe(link) {
 const win = window.open('about:blank', '_blank');
 if (!win) {
@@ -110,16 +182,17 @@ alert("Popup blocked");
 return;
 }
 win.document.write(`
-       <!DOCTYPE html>
-       <html>
-       <head><title>Hi</title></head>
-       <body style="margin:0; height:100vh; display:flex;">
-         <iframe src="${link}" style="border:none; width:100%; height:100%;"></iframe>
-       </body>
-       </html>
-     `);
+<!DOCTYPE html>
+<html>
+<head><title>Hi</title></head>
+<body style="margin:0; height:100vh; display:flex;">
+<iframe src="${link}" style="border:none; width:100%; height:100%;"></iframe>
+</body>
+</html>
+`);
 win.document.close();
 }
 </script>
+
 </body>
 </html>
