@@ -1,21 +1,22 @@
 THIS IS STILL IN PRODUCTION (I will fix things but have not much else to add, request form is below)
-Seriously if this blows up then i will have to move the website AGAIN (so don't share it with ppl, theres a REASON why I made this hard to share)
+Seriously if this blows up then I will have to move the website AGAIN (so don't share it with ppl, theres a REASON why I made this hard to share)
 Pr彡xys are in the official website
 If you would like to have a game added or fixed fill out this google form : https://docs.google.com/forms/d/e/1FAIpQLSfqJscF8Pa28ngLov3x0MyD2we9K-ETcUAX700Ve4VeiYuQHg/viewform?usp=dialog
-Sandstone: (Doesn't work with school wifi, use launcher) https://raw.githubusercontent.com/three-1415/loader/main/Sandstone.html
+Pr彡xy -> Sandstone: (Doesn't work with school wifi & use launcher) https://raw.githubusercontent.com/three-1415/loader/main/Sandstone.html
 G彡ME WEBSITES: USE OFFICIAL WEBSITE TO LAUNCH
-gn-math: https://raw.githubusercontent.com/three-1415/loader/refs/heads/main/gn.html
-G彡MES: USE OFFICIAL WEBSITE TO LAUNCH
-A few of my favorites:
-Geometry Dash (FINALLY UNBL彡CKABLE): https://raw.githubusercontent.com/three-1415/game/refs/heads/main/geodash.html
+gn-math : https://raw.githubusercontent.com/three-1415/loader/refs/heads/main/gn.html
+G彡MES : USE OFFICIAL WEBSITE TO LAUNCH
+A few of my popular working ones:
+Geometry Dash (FINALLY UNBL彡CKABLE) : https://raw.githubusercontent.com/three-1415/game/refs/heads/main/geodash.html
 Minecraft 1.12.2 : https://raw.githubusercontent.com/three-1415/game/refs/heads/main/eagler.html
 PolyTrack : https://raw.githubusercontent.com/three-1415/game/refs/heads/main/polytrack.html
-Getting Over It Scratch Edition (UPDATED TIMER) : https://raw.githubusercontent.com/FritzCohen/Luminesence-Website/main/Luminesence%20Website/Games/singleHTMLGames/justgetoverit.html
+Getting Over It Scratch Edition : https://raw.githubusercontent.com/FritzCohen/Luminesence-Website/main/Luminesence%20Website/Games/singleHTMLGames/justgetoverit.html
 Geometry Dash Scratch : https://raw.githubusercontent.com/CrimsonDeck/Geometry_Dash_v1.5_Griffpatch/refs/heads/main/index.html
 Tomb of The Mask : https://raw.githubusercontent.com/three-1415/game/refs/heads/main/totm.html
+Subway Surfers Collection (In Progress):
+New York : https://raw.githubusercontent.com/three-1415/game/refs/heads/main/subsurfyork.html
+San Francisco: https://raw.githubusercontent.com/three-1415/game/refs/heads/main/subsurfcisco.html
 Now on to the rest which mostly work
-
-
 1-9.
 1 : https://raw.githubusercontent.com/brickyosu/ugs-files-sorted/refs/heads/main/1/cl1.html
 
