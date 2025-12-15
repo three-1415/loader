@@ -1,7 +1,7 @@
 Darkspeed-v1 Link Storage
 If you would like to have a game added or fixed fill out this google form : https://docs.google.com/forms/d/e/1FAIpQLSfqJscF8Pa28ngLov3x0MyD2we9K-ETcUAX700Ve4VeiYuQHg/viewform?usp=dialog
-Pr彡xy -> Sandstone: (Doesn't work with school wifi & use launcher) https://raw.githubusercontent.com/three-1415/loader/main/Sandstone.html
-G彡ME WEBSITES: USE OFFICIAL WEBSITE TO LAUNCH
+Very finicky Pr彡xy -> Sandstone: (Doesn't work with school wifi & use launcher) https://raw.githubusercontent.com/three-1415/loader/main/Sandstone.html
+G彡ME WEBSITES:
 gn-math : https://raw.githubusercontent.com/three-1415/loader/refs/heads/main/gn.html
 G彡MES : USE OFFICIAL WEBSITE TO LAUNCH
 A few of my popular working ones:
