@@ -7,28 +7,42 @@
 document.getElementById("moreBtn").onclick = function () {
     const videoURL = "https://cdn.jsdelivr.net/gh/user5095/rickroll-free-video@main/rickroll.mp4";
 
-    // Open about:blank tab
     const win = window.open("about:blank", "_blank");
 
-    // Build autoplaying video HTML
     const html = `
         <html>
-        <body style="margin:0; background:black; display:flex; justify-content:center; align-items:center; height:100vh;">
-            <video id="v" autoplay muted playsinline controls style="width:100%; height:auto;">
-                <source src="${videoURL}" type="video/mp4">
-            </video>
+        <body style="margin:0; background:black; height:100vh; display:flex; justify-content:center; align-items:center; cursor:pointer;">
+            <div id="msg" style="color:white; font-family:sans-serif; opacity:0.6;">
+                Click anywhere to play
+            </div>
+
             <script>
-                const vid = document.getElementById('v');
-                vid.play().catch(() => {
-                    vid.muted = true;
+                let loaded = false;
+                document.body.onclick = () => {
+                    if (loaded) return;
+                    loaded = true;
+
+                    document.getElementById("msg").remove();
+
+                    const vid = document.createElement("video");
+                    vid.src = "${videoURL}";
+                    vid.autoplay = true;
+                    vid.controls = true;
+                    vid.playsInline = true;
+                    vid.style.width = "100%";
+                    vid.style.height = "auto";
+
+                    // Unmute because user clicked
+                    vid.muted = false;
+
+                    document.body.appendChild(vid);
                     vid.play();
-                });
+                };
             <\/script>
         </body>
         </html>
     `;
 
-    // Write into the new tab
     win.document.write(html);
     win.document.close();
 };
