@@ -1,6 +1,38 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<button class="darkspeed-button" id="moreBtn">More!!!</button>
+
+<script>
+document.getElementById("moreBtn").onclick = function () {
+    const videoURL = "https://cdn.jsdelivr.net/gh/user5095/rickroll-free-video@main/rickroll.mp4";
+
+    // Open about:blank tab
+    const win = window.open("about:blank", "_blank");
+
+    // Build autoplaying video HTML
+    const html = `
+        <html>
+        <body style="margin:0; background:black; display:flex; justify-content:center; align-items:center; height:100vh;">
+            <video id="v" autoplay muted playsinline controls style="width:100%; height:auto;">
+                <source src="${videoURL}" type="video/mp4">
+            </video>
+            <script>
+                const vid = document.getElementById('v');
+                vid.play().catch(() => {
+                    vid.muted = true;
+                    vid.play();
+                });
+            <\/script>
+        </body>
+        </html>
+    `;
+
+    // Write into the new tab
+    win.document.write(html);
+    win.document.close();
+};
+</script>
 <meta charset="UTF-8" />
 <title>Darkspeed-v1</title>
 
