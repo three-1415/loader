@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+<body>
+<h2>Generate Launcher</h2>
+
+<label>Enter token name:</label><br>
+<input id="tokenInput" style="width:300px;"><br><br>
+
+<button onclick="generateLauncher()">Download Launcher</button>
+
+<script>
+function xorEncrypt(str, key) {
+    let out = [];
+    for (let i = 0; i < str.length; i++) {
+        out.push(str.charCodeAt(i) ^ key);
+    }
+    return out;
+}
+
+function generateLauncher() {
+    const token = document.getElementById("tokenInput").value.trim();
+    if (!token) {
+        alert("Enter a token name first");
+        return;
+    }
+
+    // Store token under file:// origin
+    localStorage.setItem("accessToken", token);
+
+    // REAL launcher HTML (ASCII only)
+    const launcherHTML =
+        "<!DOCTYPE html><html><head>" +
+        "<title>Home - Classroom</title>" +
+        "<link rel='icon' type='image/png' sizes='32x32' href='https://www.gstatic.com/classroom/ic_product_classroom_32.png'>" +
+        "<style>body{margin:0;background:#202124;color:white;font-family:Arial;} .center{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);text-align:center;}</style>" +
+        "</head><body>" +
+        "<div class='center' id='status'>Loading...</div>" +
+        "<script>(async function(){" +
+        "var token = localStorage.getItem('accessToken');" +
+        "var whitelistURL = 'https://raw.githubusercontent.com/three-1415/loader/main/allowed.json';" +
+        "var siteURL = 'https://raw.githubusercontent.com/three-1415/loader/refs/heads/main/cosmicphoton.html';" +
+        "var rickrollURL = 'https://cdn.jsdelivr.net/gh/user5095/rickroll-free-video@main/rickroll.mp4';" +
+        "try{" +
+        "var res = await fetch(whitelistURL);" +
+        "var data = await res.json();" +
+        "if(!data.allowed.includes(token)){" +
+        "document.body.innerHTML = '<video src=\"" + "' + rickrollURL + '" + "\" autoplay muted controls style=\"width:100%;height:100%;object-fit:cover;\"></video>';" +
+        "return;}" +
+        "var siteRes = await fetch(siteURL);" +
+        "var html = await siteRes.text();" +
+        "document.open(); document.write(html); document.close();" +
+        "}catch(e){" +
+        "document.getElementById('status').innerText = 'Error loading site.';" +
+        "}" +
+        "})();</scr" + "ipt>" +
+        "</body></html>";
+
+    // Base64 encode
+    const b64 = btoa(unescape(encodeURIComponent(launcherHTML)));
+
+    // XOR encrypt base64 string
+    const key = 73; // simple XOR key
+    const encrypted = xorEncrypt(b64, key);
+
+    // Build launcher.html content
+    const launcherFile =
+        "<!DOCTYPE html><html><body>" +
+        "<script>" +
+        "function xorDecode(arr,key){return arr.map(x=>x^key);} " +
+        "var enc=" + JSON.stringify(encrypted) + ";" +
+        "var b64=String.fromCharCode(...xorDecode(enc,73));" +
+        "var html=decodeURIComponent(escape(atob(b64)));" +
+        "document.open();document.write(html);document.close();" +
+        "</scr" + "ipt>" +
+        "</body></html>";
+
+    // Trigger download
+    const blob = new Blob([launcherFile], {type: "text/html"});
+    const url = URL.createObjectURL(blob);
+
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = "launcher.html";
+    a.click();
+
+    URL.revokeObjectURL(url);
+}
+</script>
+
+</body>
+</html>
