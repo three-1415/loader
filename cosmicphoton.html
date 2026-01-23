@@ -18,7 +18,6 @@
             align-items: center;
         }
 
-        /* SEARCH BAR */
         #searchBar {
             width: 60%;
             max-width: 500px;
@@ -38,7 +37,6 @@
             box-shadow: 0 0 15px #00ffffcc;
         }
 
-        /* TAB BUTTONS */
         .tab-container {
             display: flex;
             gap: 10px;
@@ -63,7 +61,6 @@
             box-shadow: 0 0 25px #00ffffcc;
         }
 
-        /* TAB CONTENT */
         .tab-content {
             display: none;
             width: 90%;
@@ -117,20 +114,17 @@
 
 <body>
 
-<!-- ⭐ More!!! button stays at the top visually -->
 <button class="cosmicphoton-button" id="moreBtn">More!!!</button>
 
 <h1>Hello World!</h1>
 <h4>DM me: dasher1429</h4>
 
-<!-- ⭐ TAB BUTTONS -->
 <div class="tab-container">
     <button class="tab-button active" onclick="openTab('launcher')">Launcher</button>
     <button class="tab-button" onclick="openTab('spaces')">Pr彡xys</button>
     <button class="tab-button" onclick="openTab('comments')">Chat</button>
 </div>
 
-<!-- ⭐ TAB 1: LAUNCHER -->
 <div id="launcher" class="tab-content" style="display:block;">
     <h3>Games</h3>
     <input type="text" id="searchBar" placeholder="Search games..." onkeyup="filterButtons()">
@@ -159,7 +153,6 @@
 <button class="code-launcher-button" onclick="runCodeInPopup('https://raw.githubusercontent.com/three-1415/game/main/totm.html')">Launch Tomb of the Mask</button>
 </div>
 
-<!-- ⭐ TAB 2: SPACES -->
 <div id="spaces" class="tab-content">
     <h3>Pr彡xys</h3>
     <button class="cosmicphoton-button" onclick="openIframe('https://oz96krcc.beanweb.qzz.io.cdn.cloudflare.net')">Open Overcloaked</button>
@@ -177,18 +170,15 @@
     <button class="cosmicphoton-button" onclick="openIframe('https://academiq.academy.cdn.cloudflare.net')">Open Boredom V2</button>
 </div>
 
-<!-- ⭐ TAB 3: COMMENTS -->
 <div id="comments" class="tab-content">
     <h3>Chat</h3>
     <button class="cosmicphoton-button" onclick="openIframe('https://padlet.com/embed/eaip9uzs4afiqnfb')">Open Chat</button>
 </div>
 
 <script>
-/* ⭐ Shared branding */
 const BASE_TITLE = document.title;
 const BASE_FAVICON = document.querySelector("link[rel='icon']")?.href;
 
-/* ⭐ More!!! popup */
 document.getElementById("moreBtn").onclick = function () {
     const videoURL = "https://raw.githubusercontent.com/user5095/rickroll-free-video/main/rickroll.mp4";
     const win = window.open("about:blank", "_blank");
@@ -229,7 +219,6 @@ document.getElementById("moreBtn").onclick = function () {
     win.document.close();
 };
 
-/* ⭐ Search filter */
 function filterButtons() {
     const query = document.getElementById("searchBar").value.toLowerCase();
     document.querySelectorAll(".code-launcher-button").forEach(btn => {
@@ -237,7 +226,6 @@ function filterButtons() {
     });
 }
 
-/* ⭐ Tabs */
 function openTab(tabName) {
     document.querySelectorAll('.tab-content').forEach(div => div.style.display = 'none');
     document.querySelectorAll('.tab-button').forEach(btn => btn.classList.remove('active'));
@@ -245,7 +233,6 @@ function openTab(tabName) {
     event.target.classList.add('active');
 }
 
-/* ⭐ Launcher popup */
 async function runCodeInPopup(url) {
     try {
         const response = await fetch(url);
@@ -283,9 +270,13 @@ async function runCodeInPopup(url) {
     }
 }
 
-/* ⭐ Iframe popup */
 function openIframe(link) {
     const win = window.open('about:blank', '_blank');
+    if (!win) {
+        alert("Popup blocked");
+        return;
+    }
+
     win.document.write(`
         <!DOCTYPE html>
         <html>
@@ -298,7 +289,31 @@ function openIframe(link) {
         </body>
         </html>
     `);
+
     win.document.close();
+
+    function forceFavicon() {
+        if (win.closed) return;
+
+        let head = win.document.head;
+        if (!head) return;
+
+        win.document.querySelectorAll("link[rel='icon'], link[rel='shortcut icon']").forEach(e => e.remove());
+
+
+        const linkEl = win.document.createElement("link");
+        linkEl.rel = "icon";
+        linkEl.href = BASE_FAVICON;
+        head.appendChild(linkEl);
+
+
+        win.document.title = BASE_TITLE;
+    }
+
+    // Apply multiple times to beat browser timing issues
+    setTimeout(forceFavicon, 50);
+    setTimeout(forceFavicon, 200);
+    setTimeout(forceFavicon, 1000);
 }
 </script>
 
