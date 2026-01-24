@@ -276,7 +276,7 @@ function openIframe(link) {
         return;
     }
 
-    // Write a shell document first
+    // Initial shell document
     win.document.write(`
         <!DOCTYPE html>
         <html>
@@ -298,7 +298,7 @@ function openIframe(link) {
 
     win.document.close();
 
-    // Inject the iframe AFTER the document is fully parsed
+    // Insert iframe after load
     setTimeout(() => {
         if (win.closed) return;
 
@@ -311,7 +311,7 @@ function openIframe(link) {
         win.document.body.appendChild(iframe);
     }, 50);
 
-    // Keep your favicon enforcement
+    // Favicon enforcement
     function forceFavicon() {
         if (win.closed) return;
 
@@ -328,35 +328,12 @@ function openIframe(link) {
         win.document.title = BASE_TITLE;
     }
 
-    setTimeout(forceFavicon, 50);
-    setTimeout(forceFavicon, 200);
-    setTimeout(forceFavicon, 1000);
-}
-
-    function forceFavicon() {
-        if (win.closed) return;
-
-        let head = win.document.head;
-        if (!head) return;
-
-        win.document.querySelectorAll("link[rel='icon'], link[rel='shortcut icon']").forEach(e => e.remove());
-
-
-        const linkEl = win.document.createElement("link");
-        linkEl.rel = "icon";
-        linkEl.href = BASE_FAVICON;
-        head.appendChild(linkEl);
-
-
-        win.document.title = BASE_TITLE;
-    }
-
-    // Apply multiple times to beat browser timing issues
     setTimeout(forceFavicon, 50);
     setTimeout(forceFavicon, 200);
     setTimeout(forceFavicon, 1000);
 }
 </script>
+
 <script>
 setTimeout(() => {
     const link = document.createElement("link");
