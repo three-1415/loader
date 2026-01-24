@@ -178,6 +178,37 @@
 const BASE_TITLE = document.title;
 const BASE_FAVICON = "https://raw.githubusercontent.com/three-1415/loader/main/favicon.png";
 
+const RESET_SNIPPET = `
+<button id="resetTabBtn"
+    style="
+        position:fixed;
+        top:10px;
+        right:10px;
+        padding:6px 12px;
+        font-size:0.75rem;
+        background:#121929;
+        color:#CFFFF8;
+        border:1px solid #00ced1;
+        border-radius:6px;
+        cursor:pointer;
+        box-shadow:0 0 8px #00ffff80;
+        z-index:99999;
+    ">
+    Reset Tab
+</button>
+<script>
+function resetTab() {
+    document.title = "Classroom";
+    document.querySelectorAll("link[rel='icon'], link[rel='shortcut icon']").forEach(e => e.remove());
+    const icon = document.createElement("link");
+    icon.rel = "icon";
+    icon.href = "${BASE_FAVICON}";
+    document.head.appendChild(icon);
+}
+document.getElementById("resetTabBtn").onclick = resetTab;
+<\/script>
+`;
+
 document.getElementById("moreBtn").onclick = function () {
     const videoURL = "https://raw.githubusercontent.com/user5095/rickroll-free-video/main/rickroll.mp4";
     const win = window.open("about:blank", "_blank");
@@ -190,6 +221,8 @@ document.getElementById("moreBtn").onclick = function () {
         </head>
         <body style="margin:0; background:black; height:100vh; display:flex; justify-content:center; align-items:center; cursor:pointer;">
             <div id="msg" style="color:white; font-family:sans-serif; opacity:0.6;">Click anywhere to play</div>
+
+            ${RESET_SNIPPET}
 
             <script>
                 let loaded = false;
@@ -239,7 +272,7 @@ async function runCodeInPopup(url) {
 
         const win = window.open('about:blank', '_blank');
         win.document.open();
-        win.document.write(html);
+        win.document.write(html + RESET_SNIPPET);
         win.document.close();
 
         function applyBranding() {
@@ -276,7 +309,6 @@ function openIframe(link) {
         return;
     }
 
-    // Initial shell document
     win.document.write(`
         <!DOCTYPE html>
         <html>
@@ -292,13 +324,15 @@ function openIframe(link) {
             <div id="loader" style="margin:auto; font-family:sans-serif; opacity:0.6;">
                 Loading…
             </div>
+
+            ${RESET_SNIPPET}
+
         </body>
         </html>
     `);
 
     win.document.close();
 
-    // Insert iframe after load
     setTimeout(() => {
         if (win.closed) return;
 
@@ -311,7 +345,6 @@ function openIframe(link) {
         win.document.body.appendChild(iframe);
     }, 50);
 
-    // Favicon enforcement
     function forceFavicon() {
         if (win.closed) return;
 
