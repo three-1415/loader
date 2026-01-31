@@ -5,109 +5,116 @@
     <title>Home - Classroom</title>
     <link rel="icon" href="https://raw.githubusercontent.com/three-1415/loader/main/favicon.png">
     <style>
-        html, body {
-            margin: 0;
-            padding: 0;
-            height: 100%;
-            font-family: "Segoe UI", sans-serif;
-            background: #121929;
-            color: #CFFFF8;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
+html, body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    font-family: "Segoe UI", sans-serif;
+    background: #1A1333; /* vibrant but not dark purple */
+    color: #FFFFFF;      /* clean white text */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
 
-        #searchBar {
-            width: 60%;
-            max-width: 500px;
-            padding: 12px;
-            font-size: 1rem;
-            margin-top: 20px;
-            margin-bottom: 20px;
-            border: 2px solid #00ced1;
-            border-radius: 6px;
-            background: #121929;
-            color: #CFFFF8;
-            outline: none;
-            box-shadow: 0 0 8px #00ffff80;
-            transition: box-shadow 0.3s ease;
-        }
-        #searchBar:focus {
-            box-shadow: 0 0 15px #00ffffcc;
-        }
+/* Search bar */
+#searchBar {
+    width: 60%;
+    max-width: 500px;
+    padding: 12px;
+    font-size: 1rem;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    border: 2px solid #9A5BFF; /* bright purple, same vibrancy as cyan */
+    border-radius: 6px;
+    background: #1A1333;
+    color: #FFFFFF;
+    outline: none;
+    box-shadow: 0 0 10px #9A5BFF80;
+    transition: box-shadow 0.3s ease;
+}
+#searchBar:focus {
+    box-shadow: 0 0 18px #9A5BFFCC;
+}
 
-        .tab-container {
-            display: flex;
-            gap: 10px;
-            margin-top: 20px;
-        }
-        .tab-button {
-            padding: 10px 20px;
-            background: #121929;
-            border: none;
-            border-radius: 6px;
-            color: #CFFFF8;
-            cursor: pointer;
-            box-shadow: 0 0 10px #00ffff80;
-            transition: 0.3s;
-        }
-        .tab-button:hover {
-            background: #002D41;
-            box-shadow: 0 0 20px #00ffffcc;
-        }
-        .tab-button.active {
-            background: #008b8b;
-            box-shadow: 0 0 25px #00ffffcc;
-        }
+/* Tabs */
+.tab-container {
+    display: flex;
+    gap: 10px;
+    margin-top: 20px;
+}
 
-        .tab-content {
-            display: none;
-            width: 90%;
-            max-width: 900px;
-            margin-top: 20px;
-            padding: 20px;
-            background: #002D41;
-            border-radius: 10px;
-            box-shadow: 0 0 15px #00ffff40;
-        }
+.tab-button {
+    padding: 10px 20px;
+    background: #1A1333;
+    border: none;
+    border-radius: 6px;
+    color: #FFFFFF;
+    cursor: pointer;
+    box-shadow: 0 0 10px #9A5BFF50;
+    transition: 0.3s;
+}
+.tab-button:hover {
+    background: #2A1A4D; /* brighter purple, not dark */
+    box-shadow: 0 0 20px #9A5BFFAA;
+}
+.tab-button.active {
+    background: #6C3DCC; /* strong purple, same vibrancy as your old teal */
+    box-shadow: 0 0 25px #9A5BFFCC;
+}
 
-        /* Launcher input */
-        #url-input {
-            width: 60%;
-            max-width: 500px;
-            padding: 12px;
-            font-size: 1rem;
-            margin-bottom: 20px;
-            border: 2px solid #00ced1;
-            border-radius: 6px;
-            background: #121929;
-            color: #CFFFF8;
-            outline: none;
-            box-shadow: 0 0 8px #00ffff80;
-            transition: box-shadow 0.3s ease;
-        }
-        #url-input:focus {
-            box-shadow: 0 0 15px #00ffffcc;
-        }
+/* Tab content */
+.tab-content {
+    display: none;
+    width: 90%;
+    max-width: 900px;
+    margin-top: 20px;
+    padding: 20px;
+    background: #2A1A4D; /* vibrant purple panel */
+    border-radius: 10px;
+    box-shadow: 0 0 20px #9A5BFF40;
+    color: #FFFFFF;
+}
 
-        .cosmicphoton-button,
-        .code-launcher-button {
-            padding: 12px 28px;
-            background: #121929;
-            color: #CFFFF8;
-            border: none;
-            border-radius: 6px;
-            cursor: pointer;
-            font-size: 1rem;
-            box-shadow: 0 0 10px #00ffff80;
-            transition: background 0.3s ease, box-shadow 0.3s ease;
-            margin: 8px;
-        }
-        .cosmicphoton-button:hover,
-        .code-launcher-button:hover {
-            background-color: #002D41;
-            box-shadow: 0 0 20px #00ffffcc;
-        }
+/* Launcher input */
+#url-input {
+    width: 60%;
+    max-width: 500px;
+    padding: 12px;
+    font-size: 1rem;
+    margin-bottom: 20px;
+    border: 2px solid #9A5BFF;
+    border-radius: 6px;
+    background: #1A1333;
+    color: #FFFFFF;
+    outline: none;
+    box-shadow: 0 0 10px #9A5BFF80;
+    transition: box-shadow 0.3s ease;
+}
+#url-input:focus {
+    box-shadow: 0 0 18px #9A5BFFCC;
+}
+
+/* Buttons */
+.cosmicphoton-button,
+.code-launcher-button {
+    padding: 12px 28px;
+    background: #1A1333;
+    color: #FFFFFF;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 1rem;
+    box-shadow: 0 0 10px #9A5BFF50;
+    transition: background 0.3s ease, box-shadow 0.3s ease;
+    margin: 8px;
+}
+.cosmicphoton-button:hover,
+.code-launcher-button:hover {
+    background-color: #2A1A4D;
+    box-shadow: 0 0 20px #9A5BFFAA;
+}
+
     </style>
 </head>
 
