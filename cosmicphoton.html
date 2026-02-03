@@ -4,14 +4,37 @@
     <meta charset="UTF-8" />
     <title>Home - Classroom</title>
     <link rel="icon" href="https://raw.githubusercontent.com/three-1415/loader/main/favicon.png">
-    <style>
+<style>
+
+/* THEME VARIABLES — PURPLE DEFAULT */
+:root {
+    /* Background layers */
+    --bg-main: #1A1333;
+    --bg-panel: #2A1A4D;
+    --bg-hover: #2A1A4D;
+
+    /* Accent colors */
+    --accent: #9A5BFF;
+    --accent-strong: #6C3DCC;
+
+    /* Glow levels — EXACT original hex-alpha values */
+    --glow-50: #9A5BFF50;
+    --glow-80: #9A5BFF80;
+    --glow-aa: #9A5BFFAA;
+    --glow-cc: #9A5BFFCC;
+
+    /* Text */
+    --text: #FFFFFF;
+}
+
+/* GLOBAL */
 html, body {
     margin: 0;
     padding: 0;
     height: 100%;
     font-family: "Segoe UI", sans-serif;
-    background: #1A1333; /* vibrant but not dark purple */
-    color: #FFFFFF;      /* clean white text */
+    background: var(--bg-main);
+    color: var(--text);
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -25,16 +48,16 @@ html, body {
     font-size: 1rem;
     margin-top: 20px;
     margin-bottom: 20px;
-    border: 2px solid #9A5BFF; /* bright purple, same vibrancy as cyan */
+    border: 2px solid var(--accent);
     border-radius: 6px;
-    background: #1A1333;
-    color: #FFFFFF;
+    background: var(--bg-main);
+    color: var(--text);
     outline: none;
-    box-shadow: 0 0 10px #9A5BFF80;
+    box-shadow: 0 0 10px var(--glow-80);
     transition: box-shadow 0.3s ease;
 }
 #searchBar:focus {
-    box-shadow: 0 0 18px #9A5BFFCC;
+    box-shadow: 0 0 18px var(--glow-cc);
 }
 
 /* Tabs */
@@ -46,21 +69,21 @@ html, body {
 
 .tab-button {
     padding: 10px 20px;
-    background: #1A1333;
+    background: var(--bg-main);
     border: none;
     border-radius: 6px;
-    color: #FFFFFF;
+    color: var(--text);
     cursor: pointer;
-    box-shadow: 0 0 10px #9A5BFF50;
+    box-shadow: 0 0 10px var(--glow-50);
     transition: 0.3s;
 }
 .tab-button:hover {
-    background: #2A1A4D; /* brighter purple, not dark */
-    box-shadow: 0 0 20px #9A5BFFAA;
+    background: var(--bg-hover);
+    box-shadow: 0 0 20px var(--glow-aa);
 }
 .tab-button.active {
-    background: #6C3DCC; /* strong purple, same vibrancy as your old teal */
-    box-shadow: 0 0 25px #9A5BFFCC;
+    background: var(--accent-strong);
+    box-shadow: 0 0 25px var(--glow-cc);
 }
 
 /* Tab content */
@@ -70,10 +93,10 @@ html, body {
     max-width: 900px;
     margin-top: 20px;
     padding: 20px;
-    background: #2A1A4D; /* vibrant purple panel */
+    background: var(--bg-panel);
     border-radius: 10px;
-    box-shadow: 0 0 20px #9A5BFF40;
-    color: #FFFFFF;
+    box-shadow: 0 0 20px var(--glow-50);
+    color: var(--text);
 }
 
 /* Launcher input */
@@ -83,44 +106,46 @@ html, body {
     padding: 12px;
     font-size: 1rem;
     margin-bottom: 20px;
-    border: 2px solid #9A5BFF;
+    border: 2px solid var(--accent);
     border-radius: 6px;
-    background: #1A1333;
-    color: #FFFFFF;
+    background: var(--bg-main);
+    color: var(--text);
     outline: none;
-    box-shadow: 0 0 10px #9A5BFF80;
+    box-shadow: 0 0 10px var(--glow-80);
     transition: box-shadow 0.3s ease;
 }
 #url-input:focus {
-    box-shadow: 0 0 18px #9A5BFFCC;
+    box-shadow: 0 0 18px var(--glow-cc);
 }
 
 /* Buttons */
 .cosmicphoton-button,
 .code-launcher-button {
     padding: 12px 28px;
-    background: #1A1333;
-    color: #FFFFFF;
+    background: var(--bg-main);
+    color: var(--text);
     border: none;
     border-radius: 6px;
     cursor: pointer;
     font-size: 1rem;
-    box-shadow: 0 0 10px #9A5BFF50;
+    box-shadow: 0 0 10px var(--glow-50);
     transition: background 0.3s ease, box-shadow 0.3s ease;
     margin: 8px;
 }
 .cosmicphoton-button:hover,
 .code-launcher-button:hover {
-    background-color: #2A1A4D;
-    box-shadow: 0 0 20px #9A5BFFAA;
+    background-color: var(--bg-hover);
+    box-shadow: 0 0 20px var(--glow-aa);
 }
+
+/* Loading screen */
 #loading-screen {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background: #1A1333;
+    background: var(--bg-main);
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -133,33 +158,35 @@ html, body {
     pointer-events: none;
 }
 
-/* Text sits between top and video */
+/* Loading text */
 #loading-text {
-    font-size: 2.2rem; /* slightly bigger */
-    color: #FFFFFF;
-    text-shadow: 0 0 14px #9A5BFFAA;
+    font-size: 2.2rem;
+    color: var(--text);
+    text-shadow: 0 0 14px var(--glow-aa);
     margin-top: 40px;
     text-align: center;
     padding: 0 20px;
 }
 
-/* Spacer pushes video downward but not too far */
+/* Spacer */
 #loading-middle-spacer {
-    flex-grow: 0.6; /* LOWER value = video moves UP */
+    flex-grow: 0.6;
 }
 
-/* Video sits between middle and bottom */
+/* Video */
 #rickroll-video {
     width: 90vw;
     max-width: 900px;
-    height: 40vh;        /* slightly smaller so it sits higher */
+    height: 40vh;
     object-fit: cover;
     border-radius: 12px;
-    box-shadow: 0 0 25px #9A5BFFAA;
+    box-shadow: 0 0 25px var(--glow-aa);
     margin-bottom: 40px;
 }
 
-    </style>
+</style>
+
+
 </head>
 
 <body>
@@ -177,7 +204,11 @@ html, body {
 <button class="cosmicphoton-button" id="moreBtn">More!!!</button>
 
 <h1>Hello World!</h1>
+<div id="colorPalette" style="display:flex;gap:10px;margin-top:20px;"> <div class="colorOption" data-theme="purple" style="width:30px;height:30px;background:#9A5BFF;border-radius:4px;cursor:pointer;"></div> <div class="colorOption" data-theme="red" style="width:30px;height:30px;background:#FF3B3B;border-radius:4px;cursor:pointer;"></div> <div class="colorOption" data-theme="orange" style="width:30px;height:30px;background:#FF8A00;border-radius:4px;cursor:pointer;"></div> <div class="colorOption" data-theme="yellow" style="width:30px;height:30px;background:#FFD500;border-radius:4px;cursor:pointer;"></div> <div class="colorOption" data-theme="green" style="width:30px;height:30px;background:#00D26A;border-radius:4px;cursor:pointer;"></div> <div class="colorOption" data-theme="cyan" style="width:30px;height:30px;background:#00E5FF;border-radius:4px;cursor:pointer;"></div> </div>
 <h4>DM me: dasher1429</h4>
+
+
+<div id="clock" style=" font-family: Arial, sans-serif; color: white; font-size: 40px; display: flex; align-items: center; gap: 6px; "> <span id="hm"></span> <div style=" display: flex; flex-direction: column; align-items: center; line-height: 1; "> <span id="ampm" style="font-size: 14px; margin-bottom: 2px;"></span> <span id="sec" style="font-size: 20px;"></span> </div> </div> <script> (function() { function updateClock() { const hm = document.getElementById('hm'); const sec = document.getElementById('sec'); const ampmEl = document.getElementById('ampm'); const now = new Date(); let hours = now.getHours(); const minutes = now.getMinutes().toString().padStart(2, '0'); const seconds = now.getSeconds().toString().padStart(2, '0'); const ampm = hours >= 12 ? 'PM' : 'AM'; hours = hours % 12; hours = hours ? hours : 12; hours = hours.toString().padStart(2, '0'); hm.textContent = hours + ":" + minutes; sec.textContent = seconds; ampmEl.textContent = ampm; } updateClock(); setInterval(updateClock, 1000); })(); </script>
 
 <div class="tab-container">
     <button class="tab-button active" onclick="openTab('launcher')">Launcher</button>
@@ -458,6 +489,92 @@ setTimeout(() => {
     setTimeout(() => {
         document.getElementById("loading-screen").classList.add("fade-out");
     }, 3000);
+</script>
+<script>
+const themes = {
+    purple: {
+        main: "#1A1333",
+        panel: "#2A1A4D",
+        hover: "#2A1A4D",
+        accent: "#9A5BFF",
+        strong: "#6C3DCC",
+        glow50: "#9A5BFF50",
+        glow80: "#9A5BFF80",
+        glowAA: "#9A5BFFAA",
+        glowCC: "#9A5BFFCC"
+    },
+    red: {
+        main: "#330000",
+        panel: "#4D0000",
+        hover: "#660000",
+        accent: "#FF3B3B",
+        strong: "#CC2E2E",
+        glow50: "#FF3B3B50",
+        glow80: "#FF3B3B80",
+        glowAA: "#FF3B3BAA",
+        glowCC: "#FF3B3BCC"
+    },
+    orange: {
+        main: "#331A00",
+        panel: "#4D2600",
+        hover: "#663300",
+        accent: "#FF8A00",
+        strong: "#CC6E00",
+        glow50: "#FF8A0050",
+        glow80: "#FF8A0080",
+        glowAA: "#FF8A00AA",
+        glowCC: "#FF8A00CC"
+    },
+    yellow: {
+        main: "#332F00",
+        panel: "#4D4800",
+        hover: "#665F00",
+        accent: "#FFD500",
+        strong: "#CCAA00",
+        glow50: "#FFD50050",
+        glow80: "#FFD50080",
+        glowAA: "#FFD500AA",
+        glowCC: "#FFD500CC"
+    },
+    green: {
+        main: "#002D1A",
+        panel: "#004D2A",
+        hover: "#00663A",
+        accent: "#00D26A",
+        strong: "#00A856",
+        glow50: "#00D26A50",
+        glow80: "#00D26A80",
+        glowAA: "#00D26AAA",
+        glowCC: "#00D26ACC"
+    },
+    cyan: {
+        main: "#002933",
+        panel: "#00404D",
+        hover: "#005766",
+        accent: "#00E5FF",
+        strong: "#00B8CC",
+        glow50: "#00E5FF50",
+        glow80: "#00E5FF80",
+        glowAA: "#00E5FFAA",
+        glowCC: "#00E5FFCC"
+    }
+};
+
+/* APPLY THEME */
+document.querySelectorAll(".colorOption").forEach(btn => {
+    btn.addEventListener("click", () => {
+        const t = themes[btn.dataset.theme];
+        document.documentElement.style.setProperty("--bg-main", t.main);
+        document.documentElement.style.setProperty("--bg-panel", t.panel);
+        document.documentElement.style.setProperty("--bg-hover", t.hover);
+        document.documentElement.style.setProperty("--accent", t.accent);
+        document.documentElement.style.setProperty("--accent-strong", t.strong);
+        document.documentElement.style.setProperty("--glow-50", t.glow50);
+        document.documentElement.style.setProperty("--glow-80", t.glow80);
+        document.documentElement.style.setProperty("--glow-aa", t.glowAA);
+        document.documentElement.style.setProperty("--glow-cc", t.glowCC);
+    });
+});
 </script>
 
 </body>
