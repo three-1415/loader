@@ -212,28 +212,37 @@ html, body {
 (function () {
     const output = document.getElementById("personal-message");
 
-    let token = null;
-    for (let i = 0; i < localStorage.length; i++) {
-        const value = localStorage.getItem(localStorage.key(i));
-        if (value && typeof value === "string") {
-            token = value;
-            break;
-        }
-    }
-
-    console.log("Detected token:", token);
-
-    if (!token) {
-        output.innerText = "No token found.";
-        return;
-    }
-
+    // Fetch your JSON first
     fetch("https://cdn.jsdelivr.net/gh/three-1415/loader@main/messages.json")
         .then(res => res.json())
         .then(data => {
-            console.log("Fetched JSON:", data);
-            const message = data[token];
-            output.innerText = message || "No message for token: " + token;
+            console.log("Loaded JSON:", data);
+
+            let detectedToken = null;
+
+            // Loop through ALL localStorage keys
+            for (let i = 0; i < localStorage.length; i++) {
+                const key = localStorage.key(i);
+                const value = localStorage.getItem(key);
+
+                console.log("Checking localStorage:", key, "=", value);
+
+                // If the value matches a key in the JSON, we found the token
+                if (data[value]) {
+                    detectedToken = value;
+                    break;
+                }
+            }
+
+            console.log("Detected token:", detectedToken);
+
+            if (!detectedToken) {
+                output.innerText = "No valid token found on this device.";
+                return;
+            }
+
+            // Display the message
+            output.innerText = data[detectedToken];
         })
         .catch(err => {
             console.error(err);
@@ -241,6 +250,7 @@ html, body {
         });
 })();
 </script>
+
 
 <div id="clock" style=" font-family: Arial, sans-serif; color: white; font-size: 40px; display: flex; align-items: center; gap: 6px; "> <span id="hm"></span> <div style=" display: flex; flex-direction: column; align-items: center; line-height: 1; "> <span id="ampm" style="font-size: 14px; margin-bottom: 2px;"></span> <span id="sec" style="font-size: 20px;"></span> </div> </div> <script> (function() { function updateClock() { const hm = document.getElementById('hm'); const sec = document.getElementById('sec'); const ampmEl = document.getElementById('ampm'); const now = new Date(); let hours = now.getHours(); const minutes = now.getMinutes().toString().padStart(2, '0'); const seconds = now.getSeconds().toString().padStart(2, '0'); const ampm = hours >= 12 ? 'PM' : 'AM'; hours = hours % 12; hours = hours ? hours : 12; hours = hours.toString().padStart(2, '0'); hm.textContent = hours + ":" + minutes; sec.textContent = seconds; ampmEl.textContent = ampm; } updateClock(); setInterval(updateClock, 1000); })(); </script>
 
