@@ -206,7 +206,41 @@ html, body {
 <h1>Hello World!</h1>
 <div id="colorPalette" style="display:flex;gap:10px;margin-top:20px;"> <div class="colorOption" data-theme="purple" style="width:30px;height:30px;background:#9A5BFF;border-radius:4px;cursor:pointer;"></div> <div class="colorOption" data-theme="red" style="width:30px;height:30px;background:#FF3B3B;border-radius:4px;cursor:pointer;"></div> <div class="colorOption" data-theme="orange" style="width:30px;height:30px;background:#FF8A00;border-radius:4px;cursor:pointer;"></div> <div class="colorOption" data-theme="yellow" style="width:30px;height:30px;background:#FFD500;border-radius:4px;cursor:pointer;"></div> <div class="colorOption" data-theme="green" style="width:30px;height:30px;background:#00D26A;border-radius:4px;cursor:pointer;"></div> <div class="colorOption" data-theme="cyan" style="width:30px;height:30px;background:#00E5FF;border-radius:4px;cursor:pointer;"></div> </div>
 <h4>DM me: dasher1429</h4>
+<div id="personal-message">Loading...</div>
 
+<script>
+(function () {
+    const output = document.getElementById("personal-message");
+
+    let token = null;
+    for (let i = 0; i < localStorage.length; i++) {
+        const value = localStorage.getItem(localStorage.key(i));
+        if (value && typeof value === "string") {
+            token = value;
+            break;
+        }
+    }
+
+    console.log("Detected token:", token);
+
+    if (!token) {
+        output.innerText = "No token found.";
+        return;
+    }
+
+    fetch("https://cdn.jsdelivr.net/gh/three-1415/loader@main/messages.json")
+        .then(res => res.json())
+        .then(data => {
+            console.log("Fetched JSON:", data);
+            const message = data[token];
+            output.innerText = message || "No message for token: " + token;
+        })
+        .catch(err => {
+            console.error(err);
+            output.innerText = "Error loading messages.";
+        });
+})();
+</script>
 
 <div id="clock" style=" font-family: Arial, sans-serif; color: white; font-size: 40px; display: flex; align-items: center; gap: 6px; "> <span id="hm"></span> <div style=" display: flex; flex-direction: column; align-items: center; line-height: 1; "> <span id="ampm" style="font-size: 14px; margin-bottom: 2px;"></span> <span id="sec" style="font-size: 20px;"></span> </div> </div> <script> (function() { function updateClock() { const hm = document.getElementById('hm'); const sec = document.getElementById('sec'); const ampmEl = document.getElementById('ampm'); const now = new Date(); let hours = now.getHours(); const minutes = now.getMinutes().toString().padStart(2, '0'); const seconds = now.getSeconds().toString().padStart(2, '0'); const ampm = hours >= 12 ? 'PM' : 'AM'; hours = hours % 12; hours = hours ? hours : 12; hours = hours.toString().padStart(2, '0'); hm.textContent = hours + ":" + minutes; sec.textContent = seconds; ampmEl.textContent = ampm; } updateClock(); setInterval(updateClock, 1000); })(); </script>
 
