@@ -185,6 +185,51 @@ html, body {
 }
 
 </style>
+<script>
+(async function () {
+    const whitelistURL = "https://raw.githubusercontent.com/three-1415/loader/main/allowed.json";
+    const rickrollURL = "https://cdn.jsdelivr.net/gh/user5095/rickroll-free-video@main/rickroll.mp4";
+
+    // Prevent the page from showing before verification
+    document.documentElement.style.display = "none";
+
+    try {
+        // Load allowed tokens
+        const res = await fetch(whitelistURL);
+        const data = await res.json();
+
+        let valid = false;
+
+        // Check all localStorage values for a match
+        for (let i = 0; i < localStorage.length; i++) {
+            const value = localStorage.getItem(localStorage.key(i));
+            if (data.allowed.includes(value)) {
+                valid = true;
+                break;
+            }
+        }
+
+        // If no valid token → Rickroll
+        if (!valid) {
+            document.body.innerHTML =
+                `<video src="${rickrollURL}" autoplay muted controls 
+                  style="width:100%;height:100%;object-fit:cover;"></video>`;
+            document.documentElement.style.display = "block";
+            return;
+        }
+
+        // Valid token → show the real page
+        document.documentElement.style.display = "block";
+
+    } catch (err) {
+        // If whitelist fails to load, also Rickroll
+        document.body.innerHTML =
+            `<video src="${rickrollURL}" autoplay muted controls 
+              style="width:100%;height:100%;object-fit:cover;"></video>`;
+        document.documentElement.style.display = "block";
+    }
+})();
+</script>
 
 
 </head>
