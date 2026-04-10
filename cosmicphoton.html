@@ -188,7 +188,7 @@ html, body {
 <script>
 (async function () {
     const whitelistURL = "https://raw.githubusercontent.com/three-1415/loader/main/allowed.json";
-    const rickrollURL = "https://cdn.jsdelivr.net/gh/user5095/rickroll-free-video@main/rickroll.mp4";
+    const rickrollURL = "https://raw.githubusercontent.com/user5095/rickroll-free-video/main/rickroll.mp4";
 
     // Prevent the page from showing before verification
     document.documentElement.style.display = "none";
@@ -258,7 +258,7 @@ html, body {
     const output = document.getElementById("personal-message");
 
     // Fetch your JSON first
-    fetch("https://cdn.jsdelivr.net/gh/three-1415/loader@main/messages.json")
+    fetch("https://raw.githubusercontent.com/three-1415/loader/main/messages.json")
         .then(res => res.json())
         .then(data => {
             console.log("Loaded JSON:", data);
