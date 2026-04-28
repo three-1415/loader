@@ -6,28 +6,22 @@
     <link rel="icon" href="https://raw.githubusercontent.com/three-1415/loader/main/favicon.png">
 <style>
 
-/* THEME VARIABLES — PURPLE DEFAULT */
 :root {
-    /* Background layers */
     --bg-main: #1A1333;
     --bg-panel: #2A1A4D;
     --bg-hover: #2A1A4D;
 
-    /* Accent colors */
     --accent: #9A5BFF;
     --accent-strong: #6C3DCC;
 
-    /* Glow levels — EXACT original hex-alpha values */
     --glow-50: #9A5BFF50;
     --glow-80: #9A5BFF80;
     --glow-aa: #9A5BFFAA;
     --glow-cc: #9A5BFFCC;
 
-    /* Text */
     --text: #FFFFFF;
 }
 
-/* GLOBAL */
 html, body {
     margin: 0;
     padding: 0;
@@ -40,7 +34,6 @@ html, body {
     align-items: center;
 }
 
-/* Search bar */
 #searchBar {
     width: 60%;
     max-width: 500px;
@@ -60,7 +53,6 @@ html, body {
     box-shadow: 0 0 18px var(--glow-cc);
 }
 
-/* Tabs */
 .tab-container {
     display: flex;
     gap: 10px;
@@ -86,7 +78,6 @@ html, body {
     box-shadow: 0 0 25px var(--glow-cc);
 }
 
-/* Tab content */
 .tab-content {
     display: none;
     width: 90%;
@@ -99,7 +90,6 @@ html, body {
     color: var(--text);
 }
 
-/* Launcher input */
 #url-input {
     width: 60%;
     max-width: 500px;
@@ -118,7 +108,6 @@ html, body {
     box-shadow: 0 0 18px var(--glow-cc);
 }
 
-/* Buttons */
 .helloworld-button,
 .code-launcher-button {
     padding: 12px 28px;
@@ -138,7 +127,6 @@ html, body {
     box-shadow: 0 0 20px var(--glow-aa);
 }
 
-/* Loading screen */
 #loading-screen {
     position: fixed;
     top: 0;
@@ -158,7 +146,6 @@ html, body {
     pointer-events: none;
 }
 
-/* Loading text */
 #loading-text {
     font-size: 2.2rem;
     color: var(--text);
@@ -168,12 +155,10 @@ html, body {
     padding: 0 20px;
 }
 
-/* Spacer */
 #loading-middle-spacer {
     flex-grow: 0.6;
 }
 
-/* Video */
 #rickroll-video {
     width: 90vw;
     max-width: 900px;
@@ -190,17 +175,14 @@ html, body {
     const whitelistURL = "https://raw.githubusercontent.com/three-1415/loader/main/allowed.json";
     const rickrollURL = "https://raw.githubusercontent.com/user5095/rickroll-free-video/main/rickroll.mp4";
 
-    // Prevent the page from showing before verification
     document.documentElement.style.display = "none";
 
     try {
-        // Load allowed tokens
         const res = await fetch(whitelistURL);
         const data = await res.json();
 
         let valid = false;
 
-        // Check all localStorage values for a match
         for (let i = 0; i < localStorage.length; i++) {
             const value = localStorage.getItem(localStorage.key(i));
             if (data.allowed.includes(value)) {
@@ -209,7 +191,6 @@ html, body {
             }
         }
 
-        // If no valid token → Rickroll
         if (!valid) {
             document.body.innerHTML =
                 `<video src="${rickrollURL}" autoplay muted controls 
@@ -218,11 +199,9 @@ html, body {
             return;
         }
 
-        // Valid token → show the real page
         document.documentElement.style.display = "block";
 
     } catch (err) {
-        // If whitelist fails to load, also Rickroll
         document.body.innerHTML =
             `<video src="${rickrollURL}" autoplay muted controls 
               style="width:100%;height:100%;object-fit:cover;"></video>`;
@@ -257,7 +236,6 @@ html, body {
 (function () {
     const output = document.getElementById("personal-message");
 
-    // Fetch your JSON first
     fetch("https://raw.githubusercontent.com/three-1415/loader/main/messages.json")
         .then(res => res.json())
         .then(data => {
@@ -265,14 +243,12 @@ html, body {
 
             let detectedToken = null;
 
-            // Loop through ALL localStorage keys
             for (let i = 0; i < localStorage.length; i++) {
                 const key = localStorage.key(i);
                 const value = localStorage.getItem(key);
 
                 console.log("Checking localStorage:", key, "=", value);
 
-                // If the value matches a key in the JSON, we found the token
                 if (data[value]) {
                     detectedToken = value;
                     break;
@@ -286,7 +262,6 @@ html, body {
                 return;
             }
 
-            // Display the message
             output.innerText = data[detectedToken];
         })
         .catch(err => {
@@ -560,11 +535,9 @@ setTimeout(() => {
         "I need more phrases bruh"
     ];
 
-    // Pick a random phrase
     document.getElementById("loading-text").textContent =
         phrases[Math.floor(Math.random() * phrases.length)];
 
-    // Hide loading screen after 3 seconds
     setTimeout(() => {
         document.getElementById("loading-screen").classList.add("fade-out");
     }, 3000);
@@ -639,7 +612,6 @@ const themes = {
     }
 };
 
-/* APPLY THEME */
 document.querySelectorAll(".colorOption").forEach(btn => {
     btn.addEventListener("click", () => {
         const t = themes[btn.dataset.theme];
