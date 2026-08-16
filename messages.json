@@ -3,27 +3,27 @@
     "friend": "Sin The Bean",
     "message": "Just a test..."
   },
-  "hash_blank": {
+  "hash_blank_1": {
     "friend": "blank",
     "message": "Welcome back _blank_!"
-  }
-  "hash_blank": {
+  },
+  "hash_blank_2": {
     "friend": "blank",
     "message": "Welcome back _blank_!"
-  }
-  "hash_blank": {
+  },
+  "hash_blank_3": {
     "friend": "blank",
     "message": "Welcome back _blank_!"
-  }
-  "hash_blank": {
+  },
+  "hash_blank_4": {
     "friend": "blank",
     "message": "Welcome back _blank_!"
-  }
-  "hash_blank": {
+  },
+  "hash_blank_5": {
     "friend": "blank",
     "message": "Welcome back _blank_!"
-  }
-  "hash_blank": {
+  },
+  "hash_blank_6": {
     "friend": "blank",
     "message": "Welcome back _blank_!"
   }
