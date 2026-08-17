@@ -170,46 +170,1051 @@ html, body {
 }
 
 </style>
-<script>
-(async function () {
-    const whitelistURL = "https://raw.githubusercontent.com/three-1415/loader/main/allowed.json";
-    const rickrollURL = "https://raw.githubusercontent.com/three-1415/loader/main/rickroll.mp4";
 
-    document.documentElement.style.display = "none";
+<style>
+
+html.access-checking body {
+    visibility: hidden;
+}
+
+
+
+#access-denied-overlay {
+    display: none;
+
+    position: fixed;
+    inset: 0;
+
+    width: 100vw;
+    height: 100vh;
+
+    background: #000;
+
+    z-index: 2147483646;
+}
+
+#access-denied-overlay video {
+    width: 100%;
+    height: 100%;
+
+    object-fit: cover;
+}
+
+
+#admin-overlay {
+    display: none;
+
+    position: fixed;
+    inset: 0;
+
+    width: 100vw;
+    height: 100vh;
+
+    overflow-y: auto;
+
+    background: rgba(8, 4, 20, 0.98);
+
+    color: white;
+
+    z-index: 2147483647;
+
+    font-family: "Segoe UI", sans-serif;
+}
+
+#admin-box {
+    width: 90%;
+    max-width: 650px;
+
+    margin: 50px auto;
+
+    padding: 25px;
+
+    box-sizing: border-box;
+
+    background: #2A1A4D;
+
+    border: 2px solid #9A5BFF;
+
+    border-radius: 12px;
+
+    box-shadow:
+        0 0 20px #9A5BFF80,
+        0 0 60px #9A5BFF30;
+}
+
+#admin-box h1,
+#admin-box h2 {
+    text-shadow: 0 0 10px #9A5BFF;
+}
+
+#admin-box input {
+    width: 100%;
+
+    box-sizing: border-box;
+
+    padding: 12px;
+
+    margin-top: 6px;
+    margin-bottom: 15px;
+
+    border: 2px solid #9A5BFF;
+
+    border-radius: 6px;
+
+    background: #1A1333;
+
+    color: white;
+
+    font-size: 16px;
+
+    outline: none;
+}
+
+#admin-box input:focus {
+    box-shadow: 0 0 12px #9A5BFF80;
+}
+
+.admin-button {
+    padding: 10px 16px;
+
+    margin: 4px;
+
+    border: none;
+
+    border-radius: 6px;
+
+    background: #6C3DCC;
+
+    color: white;
+
+    cursor: pointer;
+
+    font-size: 15px;
+
+    transition: 0.2s;
+}
+
+.admin-button:hover {
+    background: #9A5BFF;
+
+    box-shadow: 0 0 15px #9A5BFF80;
+}
+
+.admin-output {
+    background: #1A1333;
+
+    border: 1px solid #9A5BFF;
+
+    border-radius: 6px;
+
+    padding: 12px;
+
+    margin-top: 8px;
+    margin-bottom: 15px;
+
+    word-break: break-all;
+
+    font-family: monospace;
+}
+
+#admin-error {
+    color: #ff5555;
+}
+
+#admin-success {
+    color: #55ff99;
+}
+
+#admin-token-hash,
+#password-hash-output {
+    user-select: all;
+}
+
+</style>
+
+
+<script>
+
+
+
+const CLASSROOM_DATA_URL =
+    "https://raw.githubusercontent.com/three-1415/loader/main/data.json";
+
+const ACCESS_DENIED_VIDEO =
+    "https://raw.githubusercontent.com/three-1415/loader/main/rickroll.mp4";
+
+const MASTER_PASSWORD_HASH =
+    "4c490f5a854fabe9ddc8cdbf4a5d20b589236c93d4000ea749b43973a6dddc4f";
+
+const CREDENTIAL_STORAGE_KEY =
+    "classroomCredential";
+
+
+
+
+document.documentElement.classList.add("access-checking");
+
+
+
+async function classroomSHA256(text) {
+
+    const buffer =
+        await crypto.subtle.digest(
+            "SHA-256",
+            new TextEncoder().encode(text)
+        );
+
+    return Array.from(
+        new Uint8Array(buffer)
+    )
+    .map(
+        byte =>
+            byte.toString(16).padStart(2, "0")
+    )
+    .join("");
+}
+
+
+
+
+let classroomData = null;
+let currentPerson = null;
+
+
+
+async function loadClassroomData() {
+
+    const response =
+        await fetch(
+            CLASSROOM_DATA_URL +
+            "?v=" +
+            Date.now(),
+            {
+                cache: "no-store"
+            }
+        );
+
+    if (!response.ok) {
+
+        throw new Error(
+            "Could not load data.json: HTTP " +
+            response.status
+        );
+    }
+
+    classroomData =
+        await response.json();
+
+
+    if (
+        !classroomData ||
+        !Array.isArray(classroomData.people)
+    ) {
+
+        throw new Error(
+            "data.json must contain a people array."
+        );
+    }
+}
+
+
+
+async function checkClassroomAccess() {
+
+    const token =
+        localStorage.getItem(
+            CREDENTIAL_STORAGE_KEY
+        );
+
+
+
+    if (!token) {
+
+        showAccessDenied();
+
+        return false;
+    }
+
+
+    const tokenHash =
+        await classroomSHA256(
+            token.trim()
+        );
+
+
+    console.log(
+        "[ACCESS] Token hash:",
+        tokenHash
+    );
+
+
+
+
+    const person =
+        classroomData.people.find(
+            entry => {
+
+                if (!entry.tokenHash)
+                    return false;
+
+                return (
+                    String(entry.tokenHash)
+                        .trim()
+                        .toLowerCase()
+                    ===
+                    tokenHash.toLowerCase()
+                );
+            }
+        );
+
+
+
+    if (!person) {
+
+        console.log(
+            "[ACCESS] Token not found in data.json."
+        );
+
+        localStorage.removeItem(
+            CREDENTIAL_STORAGE_KEY
+        );
+
+        showAccessDenied();
+
+        return false;
+    }
+
+
+  
+    currentPerson = person;
+
+    window.currentPerson = person;
+
+
+    console.log(
+        "[ACCESS] Welcome:",
+        person.name
+    );
+
+
+ 
+    document.documentElement
+        .classList.remove("access-checking");
+
+
+    return true;
+}
+
+
+
+function showAccessDenied() {
+
+    const overlay =
+        document.getElementById(
+            "access-denied-overlay"
+        );
+
+
+    if (!overlay) {
+
+        window.classroomAccessDenied = true;
+
+
+        return;
+    }
+
+
+    overlay.style.display = "block";
+
+
+    document.documentElement
+        .classList.remove("access-checking");
+}
+
+
+
+document.addEventListener(
+    "keydown",
+    function(event) {
+
+        if (
+            event.ctrlKey &&
+            event.shiftKey &&
+            event.code === "KeyM"
+        ) {
+
+            event.preventDefault();
+            event.stopPropagation();
+
+            openAdminPanel();
+        }
+
+    },
+    true
+);
+
+
+
+
+function openAdminPanel() {
+
+    const panel =
+        document.getElementById(
+            "admin-overlay"
+        );
+
+
+    if (!panel) {
+
+        console.warn(
+            "[ADMIN] Admin panel has not loaded yet."
+        );
+
+        return;
+    }
+
+
+    panel.style.display = "block";
+
+
+    const passwordInput =
+        document.getElementById(
+            "admin-password"
+        );
+
+
+    if (passwordInput) {
+
+        setTimeout(
+            () => passwordInput.focus(),
+            50
+        );
+    }
+}
+
+
+function closeAdminPanel() {
+
+    const panel =
+        document.getElementById(
+            "admin-overlay"
+        );
+
+
+    if (panel)
+        panel.style.display = "none";
+
+
+    const password =
+        document.getElementById(
+            "admin-password"
+        );
+
+    const token =
+        document.getElementById(
+            "admin-token"
+        );
+
+
+    if (password)
+        password.value = "";
+
+    if (token)
+        token.value = "";
+}
+
+
+
+
+async function adminLogin() {
+
+    const password =
+        document.getElementById(
+            "admin-password"
+        ).value;
+
+
+    if (!password) {
+
+        document.getElementById(
+            "admin-error"
+        ).textContent =
+            "Enter the administrator password.";
+
+        return;
+    }
+
+
+    const enteredHash =
+        await classroomSHA256(
+            password
+        );
+
+
+    if (
+        enteredHash.toLowerCase() !==
+        MASTER_PASSWORD_HASH
+            .trim()
+            .toLowerCase()
+    ) {
+
+        document.getElementById(
+            "admin-error"
+        ).textContent =
+            "Incorrect administrator password.";
+
+        return;
+    }
+
+
+    document.getElementById(
+        "admin-error"
+    ).textContent = "";
+
+
+    document.getElementById(
+        "admin-login"
+    ).style.display = "none";
+
+
+    document.getElementById(
+        "admin-tools"
+    ).style.display = "block";
+}
+
+
+
+
+async function generateFriendlyToken() {
+
+    const name =
+        document.getElementById(
+            "admin-name"
+        ).value.trim();
+
+
+    if (!name) {
+
+        alert(
+            "Enter the person's name first."
+        );
+
+        return;
+    }
+
+
+
+    const alphabet =
+        "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
+
+
+    const randomBytes =
+        new Uint8Array(8);
+
+
+    crypto.getRandomValues(
+        randomBytes
+    );
+
+
+    let randomPart = "";
+
+
+    for (const byte of randomBytes) {
+
+        randomPart +=
+            alphabet[
+                byte % alphabet.length
+            ];
+    }
+
+
+    const cleanName =
+        name
+            .replace(
+                /[^a-zA-Z0-9]/g,
+                ""
+            )
+            .slice(0, 12);
+
+
+    const token =
+        cleanName +
+        "-" +
+        randomPart.slice(0, 4) +
+        "-" +
+        randomPart.slice(4, 8);
+
+
+    document.getElementById(
+        "admin-token"
+    ).value =
+        token;
+
+
+    await updateTokenHash();
+}
+
+
+
+
+async function updateTokenHash() {
+
+    const token =
+        document.getElementById(
+            "admin-token"
+        ).value.trim();
+
+
+    const output =
+        document.getElementById(
+            "admin-token-hash"
+        );
+
+
+    if (!token) {
+
+        output.textContent =
+            "Nothing yet.";
+
+        return;
+    }
+
+
+    const hash =
+        await classroomSHA256(token);
+
+
+    output.textContent =
+        hash;
+}
+
+
+
+async function installAdminToken() {
+
+    const token =
+        document.getElementById(
+            "admin-token"
+        ).value.trim();
+
+
+    if (!token) {
+
+        alert(
+            "Enter or generate a token first."
+        );
+
+        return;
+    }
+
+
+    localStorage.setItem(
+        CREDENTIAL_STORAGE_KEY,
+        token
+    );
+
+
+    const hash =
+        await classroomSHA256(token);
+
+
+    document.getElementById(
+        "admin-token-hash"
+    ).textContent =
+        hash;
+
+
+    document.getElementById(
+        "admin-success"
+    ).textContent =
+        "Token installed. The hash above must be added to data.json.";
+
+
+  
+}
+
+
+
+async function copyAdminToken() {
+
+    const token =
+        document.getElementById(
+            "admin-token"
+        ).value;
+
+
+    if (!token)
+        return;
+
+
+    await navigator.clipboard.writeText(
+        token
+    );
+
+
+    document.getElementById(
+        "admin-success"
+    ).textContent =
+        "Token copied.";
+}
+
+
+
+async function copyAdminHash() {
+
+    const hash =
+        document.getElementById(
+            "admin-token-hash"
+        ).textContent;
+
+
+    if (
+        !hash ||
+        hash === "Nothing yet."
+    )
+        return;
+
+
+    await navigator.clipboard.writeText(
+        hash
+    );
+
+
+    document.getElementById(
+        "admin-success"
+    ).textContent =
+        "SHA-256 hash copied.";
+}
+
+
+
+
+async function hashPasswordForSetup() {
+
+    const password =
+        document.getElementById(
+            "hash-input"
+        ).value;
+
+
+    if (!password) {
+
+        alert(
+            "Enter a password first."
+        );
+
+        return;
+    }
+
+
+    const hash =
+        await classroomSHA256(
+            password
+        );
+
+
+    document.getElementById(
+        "password-hash-output"
+    ).textContent =
+        hash;
+}
+
+
+
+
+function createClassroomAccessUI() {
+
+
+
+    const accessOverlay =
+        document.createElement("div");
+
+    accessOverlay.id =
+        "access-denied-overlay";
+
+
+    accessOverlay.innerHTML = `
+        <video
+            src="${ACCESS_DENIED_VIDEO}"
+            autoplay
+            muted
+            controls
+            playsinline>
+        </video>
+    `;
+
+
+    document.body.prepend(
+        accessOverlay
+    );
+
+
+
+    const adminOverlay =
+        document.createElement("div");
+
+    adminOverlay.id =
+        "admin-overlay";
+
+
+    adminOverlay.innerHTML = `
+
+        <div id="admin-box">
+
+            <div id="admin-login">
+
+                <h1>Administrator</h1>
+
+                <p>
+                    Administrator password:
+                </p>
+
+                <input
+                    id="admin-password"
+                    type="password"
+                    autocomplete="off"
+                    spellcheck="false"
+                >
+
+                <button
+                    class="admin-button"
+                    onclick="adminLogin()"
+                >
+                    Unlock
+                </button>
+
+                <p id="admin-error"></p>
+
+            </div>
+
+
+            <div
+                id="admin-tools"
+                style="display:none;"
+            >
+
+                <h1>Administrator</h1>
+
+                <h2>Set Up A Device</h2>
+                <h3>https://forms.gle/V1mZmXK4uMzDqULF6</h3>
+                <p>
+                    Generate a token for this person.
+                    The SHA-256 hash must be placed
+                    into data.json.
+                </p>
+
+
+                <label>
+                    Person's name
+                </label>
+
+                <input
+                    id="admin-name"
+                    type="text"
+                    placeholder="Alice"
+                    autocomplete="off"
+                >
+
+
+                <label>
+                    Token
+                </label>
+
+                <input
+                    id="admin-token"
+                    type="text"
+                    placeholder="Alice-ABCD-2345"
+                    autocomplete="off"
+                >
+
+
+                <button
+                    class="admin-button"
+                    onclick="generateFriendlyToken()"
+                >
+                    Generate Token
+                </button>
+
+
+                <button
+                    class="admin-button"
+                    onclick="installAdminToken()"
+                >
+                    Install On This Device
+                </button>
+
+
+                <h3>
+                    SHA-256 for data.json
+                </h3>
+
+
+                <div
+                    id="admin-token-hash"
+                    class="admin-output"
+                >
+                    Nothing yet.
+                </div>
+
+
+                <button
+                    class="admin-button"
+                    onclick="updateTokenHash()"
+                >
+                    Update Hash
+                </button>
+
+
+                <button
+                    class="admin-button"
+                    onclick="copyAdminHash()"
+                >
+                    Copy Hash
+                </button>
+
+
+                <button
+                    class="admin-button"
+                    onclick="copyAdminToken()"
+                >
+                    Copy Token
+                </button>
+
+
+                <p id="admin-success"></p>
+
+
+                <hr
+                    style="
+                        border-color:#9A5BFF50;
+                        margin:25px 0;
+                    "
+                >
+
+
+                <h2>
+                    Master Password Setup
+                </h2>
+
+
+                <p>
+                    Generate the SHA-256 hash of
+                    your administrator password.
+                </p>
+
+
+                <input
+                    id="hash-input"
+                    type="password"
+                    placeholder="Master password"
+                    autocomplete="off"
+                >
+
+
+                <button
+                    class="admin-button"
+                    onclick="hashPasswordForSetup()"
+                >
+                    Generate Password Hash
+                </button>
+
+
+                <div
+                    id="password-hash-output"
+                    class="admin-output"
+                >
+                    Nothing yet.
+                </div>
+
+
+                <button
+                    class="admin-button"
+                    onclick="
+                        navigator.clipboard.writeText(
+                            document.getElementById(
+                                'password-hash-output'
+                            ).textContent
+                        )
+                    "
+                >
+                    Copy Password Hash
+                </button>
+
+
+                <hr
+                    style="
+                        border-color:#9A5BFF50;
+                        margin:25px 0;
+                    "
+                >
+
+
+                <button
+                    class="admin-button"
+                    onclick="closeAdminPanel()"
+                >
+                    Close
+                </button>
+
+            </div>
+
+        </div>
+    `;
+
+
+    document.body.appendChild(
+        adminOverlay
+    );
+
+
+    if (
+        window.classroomAccessDenied
+    ) {
+
+        showAccessDenied();
+    }
+}
+
+
+
+
+async function initializeClassroomAccess() {
 
     try {
-        const res = await fetch(whitelistURL);
-        const data = await res.json();
 
-        let valid = false;
+        await loadClassroomData();
 
-        for (let i = 0; i < localStorage.length; i++) {
-            const value = localStorage.getItem(localStorage.key(i));
-            if (data.allowed.includes(value)) {
-                valid = true;
-                break;
-            }
-        }
 
-        if (!valid) {
-            document.body.innerHTML =
-                `<video src="${rickrollURL}" autoplay muted controls 
-                  style="width:100%;height:100%;object-fit:cover;"></video>`;
-            document.documentElement.style.display = "block";
-            return;
-        }
 
-        document.documentElement.style.display = "block";
+        await checkClassroomAccess();
 
-    } catch (err) {
-        document.body.innerHTML =
-            `<video src="${rickrollURL}" autoplay muted controls 
-              style="width:100%;height:100%;object-fit:cover;"></video>`;
-        document.documentElement.style.display = "block";
+    } catch (error) {
+
+        console.error(
+            "[ACCESS ERROR]",
+            error
+        );
+
+        showAccessDenied();
     }
-})();
-</script>
+}
 
+
+
+
+document.addEventListener(
+    "DOMContentLoaded",
+    function() {
+
+        createClassroomAccessUI();
+
+        initializeClassroomAccess();
+
+    }
+);
+
+</script>
 
 </head>
 
@@ -233,42 +1238,91 @@ html, body {
 <div id="personal-message">Loading...</div>
 
 <script>
+
 (function () {
-    const output = document.getElementById("personal-message");
 
-    fetch("https://raw.githubusercontent.com/three-1415/loader/main/messages.json")
-        .then(res => res.json())
-        .then(data => {
-            console.log("Loaded JSON:", data);
+    const output =
+        document.getElementById(
+            "personal-message"
+        );
 
-            let detectedToken = null;
 
-            for (let i = 0; i < localStorage.length; i++) {
-                const key = localStorage.key(i);
-                const value = localStorage.getItem(key);
 
-                console.log("Checking localStorage:", key, "=", value);
+    function showMessage() {
 
-                if (data[value]) {
-                    detectedToken = value;
-                    break;
-                }
-            }
+        if (!window.currentPerson) {
 
-            console.log("Detected token:", detectedToken);
+            output.textContent =
+                "No personal message.";
 
-            if (!detectedToken) {
-                output.innerText = "No valid token found on this device.";
+            return;
+        }
+
+
+        const messages =
+            window.currentPerson.messages || [];
+
+
+        if (messages.length === 0) {
+
+            output.textContent =
+                "No personal message.";
+
+            return;
+        }
+
+
+        output.innerHTML = "";
+
+
+        messages.forEach(function(message) {
+
+            const div =
+                document.createElement("div");
+
+            div.textContent = message;
+
+            div.style.marginBottom =
+                "8px";
+
+            output.appendChild(div);
+
+        });
+
+    }
+
+
+
+    let attempts = 0;
+
+
+    const timer =
+        setInterval(function () {
+
+            attempts++;
+
+
+            if (window.currentPerson) {
+
+                clearInterval(timer);
+
+                showMessage();
+
                 return;
             }
 
-            output.innerText = data[detectedToken];
-        })
-        .catch(err => {
-            console.error(err);
-            output.innerText = "Error loading messages.";
-        });
+
+            if (attempts >= 50) {
+
+                clearInterval(timer);
+
+                showMessage();
+            }
+
+        }, 100);
+
 })();
+
 </script>
 
 
@@ -291,13 +1345,14 @@ html, body {
 
 <button class="code-launcher-button" onclick="runCodeInPopup('https://raw.githubusercontent.com/three-1415/gdl/main/index.html')">Launch Geometry Dash</button>
 
-<button class="code-launcher-button" onclick="runCodeInPopup('https://raw.githubusercontent.com/three-1415/game/main/ovo.html')">Launch OvO 1.4.4 (fixed)</button>
+<button class="code-launcher-button" onclick="runCodeInPopup('https://raw.githubusercontent.com/three-1415/game/main/ovo.html')">Launch OvO 1.4.4 (fixed mostly)</button>
 
 <button class="code-launcher-button" onclick="runCodeInPopup('https://raw.githubusercontent.com/three-1415/game/main/ovo2.html')">Launch OvO 2</button>
 
 <button class="code-launcher-button" onclick="runCodeInPopup('https://raw.githubusercontent.com/bingleton-ate-a-carrot-and-died/bingleton-ate-a-carrot-and-died.github.io@adc271dd82caef773ad36f0da45c09a27f4508b3/games/ovo3.html')">Launch OvO Dimensions</button>
 
-<button class="code-launcher-button" onclick="runCodeInPopup('https://raw.githubusercontent.com/three-1415/game/main/eagler.html')">Launch Minecraft 1.12.2 (fixed)</button>
+<button class="code-launcher-button" onclick="runCodeInPopup('https://raw.githubusercontent.com/brickyosu/ugs-files-sorted/refs/heads/main/minecraft/EaglercraftZ_1.11.2.html
+')">Launch Minecraft 1.11.2 (fixed)</button>
 
 <button class="code-launcher-button" onclick="runCodeInPopup('https://raw.githubusercontent.com/three-1415/game/main/polytrack.html')">Launch PolyTrack</button>
 
