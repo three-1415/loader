@@ -2,25 +2,24 @@
   "people": [
     {
       "name": "Alice",
-      "tokenHash": "PUT_THE_HASH_OF_ALICE'S_TOKEN_HERE",
+      "tokenHash": "PUT_ALICE_HASH_HERE",
       "messages": [
         "Hello Alice!",
-        "This is Alice's personal message."
+        "Welcome back!"
       ]
     },
     {
       "name": "Bob",
-      "tokenHash": "PUT_THE_HASH_OF_BOB'S_TOKEN_HERE",
+      "tokenHash": "PUT_BOB_HASH_HERE",
       "messages": [
-        "Hello Bob!",
-        "Bob gets a different message."
+        "Yo Bob!"
       ]
     },
     {
       "name": "Charlie",
-      "tokenHash": "b9dd960c1753459a78115d3cb845a57d924b6877e805b08bd01086ccdf34433c",
+      "tokenHash": "PUT_CHARLIE_HASH_HERE",
       "messages": [
-        "Hello Charlie!"
+        "Charlie has a message here."
       ]
     }
   ]
