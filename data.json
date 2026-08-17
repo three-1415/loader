@@ -1,11 +1,10 @@
 {
   "people": [
     {
-      "name": "Alice",
-      "tokenHash": "PUT_ALICE_HASH_HERE",
+      "name": "ePengu",
+      "tokenHash": "920d156a60669697156f77cc9d5396f34da1c02d273bb02acaabc3273d3915d4",
       "messages": [
-        "Hello Alice!",
-        "Welcome back!"
+        "Just a test...!"
       ]
     },
     {
