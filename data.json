@@ -8,10 +8,10 @@
       ]
     },
     {
-      "name": "Bob",
-      "tokenHash": "PUT_BOB_HASH_HERE",
+      "name": "ePengu2",
+      "tokenHash": "b08c341e091f9225ad17899530a43e3b3fa4321cf9d1de8512c0b4a29870b088",
       "messages": [
-        "Yo Bob!"
+        "Just a test...!"
       ]
     },
     {
