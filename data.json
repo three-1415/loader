@@ -18,7 +18,7 @@
       "name": "Remsar",
       "tokenHash": "7bbcaec6e226be90a7bc0a53a0ac69414b7ad1fa5897e7e3fbec2674a189db8d",
       "messages": [
-        "Welcome to Hel(insert stick & cheesybread in)"
+        "Welcome to Hel(insert cheesybread in)"
       ]
     },
     {
@@ -26,6 +26,13 @@
       "tokenHash": "7b2b5a6bca4197e2978f43d55ef72429235b142efc12ccef702aea2c9809ec84",
       "messages": [
         "Yo drainers trust."
+      ]
+    },
+    {
+      "name": "Samia",
+      "tokenHash": "d3a888453ce3e1b083a9352c6f8ad93b35ab83edb64c7fabac5ea3b86e79b905",
+      "messages": [
+        "Spanish is too hard."
       ]
     },
       {
